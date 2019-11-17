@@ -1,8 +1,6 @@
 {
-  "packages": [
-    "server",
-    "web",
-    "mobile"
-  ],
-  "version": "0.0.0"
+  "packages": ["server", "web", "mobile"],
+  "version": "1.0.0",
+  "npmClient": "yarn",
+  "useWorkspaces": true
 }
