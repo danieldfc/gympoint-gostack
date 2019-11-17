@@ -1,0 +1,8 @@
+{
+  "packages": [
+    "server",
+    "web",
+    "mobile"
+  ],
+  "version": "0.0.0"
+}
