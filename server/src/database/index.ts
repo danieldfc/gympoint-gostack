@@ -2,12 +2,12 @@ import { Sequelize } from 'sequelize';
 
 import User from '../app/models/user.model';
 
-import databaseConfig from '../config/database';
+import dbConfig from '../config/database';
 
 const models = [User];
 
 class Database {
-  public connection: Sequelize = new Sequelize(databaseConfig)
+  public connection: Sequelize = new Sequelize(dbConfig)
 
   constructor() {
     this.init();
