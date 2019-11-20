@@ -44,4 +44,11 @@ describe('User store', () => {
     expect(response.status).toBe(400);
     expect(response.body.error.message).toBe('User already exists.');
   });
+
+  it('should not be able register user without fields', async () => {
+    const response = await request(app).post('/users');
+
+    expect(response.status).toBe(401);
+    expect(response.body).toMatchObject({ error: { message: 'Validation failure.' } });
+  });
 });

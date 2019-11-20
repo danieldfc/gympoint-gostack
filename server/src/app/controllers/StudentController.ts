@@ -29,7 +29,34 @@ class StudentController {
   }
 
   async update(req: Request, res: Response): Promise<Response> {
-    return res.status(200).json({ id: 1 });
+    const { email } = req.body;
+    const { id } = req.params;
+
+    if (email) {
+      const checkStudent = await Student.findOne({ where: { email } });
+
+      if (checkStudent) {
+        return res.status(401).json({
+          error: { message: 'Student already exists with this email.' },
+        });
+      }
+    }
+
+    const student = await Student.findByPk(id);
+
+    if (!student) {
+      return res.status(400).json({ error: { message: 'Student not found.' } });
+    }
+
+    const { name, weight, height } = await student.update(req.body);
+
+    return res.status(200).json({
+      id,
+      name,
+      email,
+      weight,
+      height,
+    });
   }
 }
 

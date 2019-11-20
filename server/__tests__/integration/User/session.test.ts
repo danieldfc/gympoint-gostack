@@ -12,14 +12,14 @@ describe('Session store', () => {
   });
 
   it('should be able create a new session', async () => {
-    await factory.create('User', {
-      email: 'daniel@test.com',
+    const user: UserInterface = await factory.create('User', {
       password: '123456',
     });
+
     const response = await request(app)
       .post('/sessions')
       .send({
-        email: 'daniel@test.com',
+        email: user.email,
         password: '123456',
       });
 

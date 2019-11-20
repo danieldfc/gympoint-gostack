@@ -2,21 +2,15 @@ import {
   Model, Column, DataType, CreatedAt, UpdatedAt,
 } from 'sequelize-typescript';
 
-class Student extends Model<Student> {
+class Plan extends Model<Plan> {
   @Column
-  name!: string
+  title!: string
 
   @Column
-  email!: string
+  duration!: string
 
   @Column
-  age!: number
-
-  @Column
-  weight!: number
-
-  @Column
-  height!: number
+  price!: number
 
   @CreatedAt
   @Column
@@ -29,11 +23,9 @@ class Student extends Model<Student> {
   public static init(sequelize) {
     super.init(
       {
-        name: DataType.STRING,
-        email: DataType.STRING,
-        age: DataType.INTEGER,
-        weight: DataType.DOUBLE,
-        height: DataType.DOUBLE,
+        title: DataType.STRING,
+        duration: DataType.STRING,
+        price: DataType.DOUBLE,
       },
       {
         sequelize,
@@ -44,4 +36,4 @@ class Student extends Model<Student> {
   }
 }
 
-export default Student;
+export default Plan;

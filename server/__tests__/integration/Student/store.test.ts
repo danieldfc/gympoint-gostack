@@ -34,12 +34,11 @@ describe('Student store', () => {
   it('should not be able register a student duplicated', async () => {
     const user: UserInterface = await factory.create('User');
 
-    await factory.create('Student', {
+    const studentOne: StudentInterface = await factory.create('Student', {
       email: 'daniel@test.com',
     });
-
     const student: StudentInterface = await factory.attrs('Student', {
-      email: 'test@test.com',
+      email: 'felizardo@test.com',
     });
 
     const response = await request(app)
@@ -47,7 +46,7 @@ describe('Student store', () => {
       .set('Authorization', `Bearer ${user.generateToken()}`)
       .send({
         name: student.name,
-        email: 'daniel@test.com',
+        email: studentOne.email,
         age: student.age,
         weight: student.weight,
         height: student.height,
