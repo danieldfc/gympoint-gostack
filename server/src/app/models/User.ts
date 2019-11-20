@@ -2,8 +2,9 @@ import {
   Model, DataType, Column, UpdatedAt, CreatedAt,
 } from 'sequelize-typescript';
 import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 
-import { UserInterface } from '../interfaces/user';
+import { UserInterface } from '../interfaces/UserInterface';
 
 class User extends Model<User> {
   @Column
@@ -52,6 +53,10 @@ class User extends Model<User> {
 
   public checkPassword(password: string): Promise<boolean> {
     return bcrypt.compare(password, this.password_hash);
+  }
+
+  public generateToken() {
+    return jwt.sign({ id: this.id }, process.env.APP_SECRET || 'test');
   }
 }
 

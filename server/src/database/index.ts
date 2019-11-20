@@ -1,10 +1,11 @@
 import { Sequelize } from 'sequelize';
 
-import User from '../app/models/user.model';
+import User from '../app/models/User';
+import Student from '../app/models/Student';
 
 import dbConfig from '../config/database';
 
-const models = [User];
+const models = [User, Student];
 
 class Database {
   public connection: Sequelize = new Sequelize(dbConfig)

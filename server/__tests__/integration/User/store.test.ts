@@ -1,6 +1,8 @@
 import request from 'supertest';
 import app from '../../../src/app';
 
+import { UserInterface } from '../../../src/app/interfaces/UserInterface';
+
 import truncate from '../../util/truncate';
 import factory from '../../factories';
 
@@ -10,7 +12,7 @@ describe('User store', () => {
   });
 
   it('should be able register a new user', async () => {
-    const user = await factory.attrs('User');
+    const user: UserInterface = await factory.attrs('User');
     const response = await request(app)
       .post('/users')
       .send(user);

@@ -5,4 +5,6 @@ export interface UserInterface extends Model {
   email: string
   password?: string
   password_hash: string
+  checkPassword(): boolean
+  generateToken(): void
 }

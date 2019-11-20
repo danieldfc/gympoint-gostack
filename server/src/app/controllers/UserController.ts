@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 
-import User from '../models/user.model';
+import User from '../models/User';
 
 class UserController {
   async store(req: Request, res: Response): Promise<Response> {

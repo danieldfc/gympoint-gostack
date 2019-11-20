@@ -6,6 +6,10 @@ import express, {
 import cors from 'cors';
 import Youch from 'youch';
 import morgan from 'morgan';
+import helmet from 'helmet';
+// import redis from 'redis';
+// import RateLimit from 'express-rate-limit';
+// import RateLimitRedis from 'rate-limit-redis';
 
 import routes from './routes';
 
@@ -23,9 +27,19 @@ class App {
   }
 
   private middlewares(): void {
+    this.server.use(helmet());
     this.server.use(cors());
     this.server.use(json());
     this.server.use(morgan('dev'));
+
+    /* this.server.use(new RateLimit({
+      store: new RateLimitRedis({
+        client: redis.createClient({
+          host: process.env.REDIS_HOST,
+          port: 6379,
+        }),
+      }),
+    })); */
   }
 
   private routes(): void {
