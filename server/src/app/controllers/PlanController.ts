@@ -17,7 +17,12 @@ class PlanController {
       return res.status(400).json({ error: { message: 'Plan not found' } });
     }
 
-    return res.status(200).json(plan);
+    return res.status(200).json({
+      id,
+      title: plan.title,
+      duration: plan.duration,
+      price: plan.price,
+    });
   }
 
   async store(req: Request, res: Response): Promise<Response> {
@@ -67,7 +72,12 @@ class PlanController {
 
     await plan.update(req.body);
 
-    return res.status(200).json(plan);
+    return res.status(200).json({
+      id,
+      title: plan.title,
+      duration: plan.duration,
+      price: plan.price,
+    });
   }
 
   async delete(req: Request, res: Response): Promise<Response> {
