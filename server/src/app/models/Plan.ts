@@ -7,7 +7,7 @@ class Plan extends Model<Plan> {
   title!: string
 
   @Column
-  duration!: string
+  duration!: number
 
   @Column
   price!: number
@@ -24,7 +24,7 @@ class Plan extends Model<Plan> {
     super.init(
       {
         title: DataType.STRING,
-        duration: DataType.STRING,
+        duration: DataType.INTEGER,
         price: DataType.DOUBLE,
       },
       {

@@ -5,7 +5,7 @@ import { UserInterface } from '../../../src/app/interfaces/UserInterface';
 import { PlanInterface } from '../../../src/app/interfaces/PlanInterface';
 
 import truncate from '../../util/truncate';
-import factory from '../../factories';
+import factory from '../../factory';
 
 describe('Plan delete', () => {
   beforeEach(async () => {
@@ -28,6 +28,7 @@ describe('Plan delete', () => {
       .delete('/plans/1')
       .set('Authorization', `Bearer ${user.generateToken()}`);
 
-    expect(response.status).toBe(200);
+    expect(response.status).toBe(400);
+    expect(response.body).toMatchObject({ error: { message: 'Plan  not found.' } });
   });
 });

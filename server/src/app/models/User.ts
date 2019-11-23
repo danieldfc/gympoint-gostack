@@ -4,6 +4,8 @@ import {
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
+import authConfig from '../../config/auth';
+
 import { UserInterface } from '../interfaces/UserInterface';
 
 class User extends Model<User> {
@@ -15,9 +17,6 @@ class User extends Model<User> {
 
   @Column
   password_hash!: string;
-
-  @Column
-  provider!: boolean;
 
   @CreatedAt
   @Column
@@ -34,7 +33,6 @@ class User extends Model<User> {
         email: DataType.STRING,
         password: DataType.VIRTUAL,
         password_hash: DataType.STRING,
-        provider: DataType.BOOLEAN,
       },
       {
         sequelize,
@@ -55,8 +53,10 @@ class User extends Model<User> {
     return bcrypt.compare(password, this.password_hash);
   }
 
-  public generateToken() {
-    return jwt.sign({ id: this.id }, process.env.APP_SECRET || 'test');
+  public generateToken(): string {
+    return jwt.sign({ id: this.id }, authConfig.secret, {
+      expiresIn: authConfig.expiresIn,
+    });
   }
 }
 

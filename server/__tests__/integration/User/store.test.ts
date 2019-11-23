@@ -4,7 +4,7 @@ import app from '../../../src/app';
 import { UserInterface } from '../../../src/app/interfaces/UserInterface';
 
 import truncate from '../../util/truncate';
-import factory from '../../factories';
+import factory from '../../factory';
 
 describe('User store', () => {
   beforeEach(async () => {
@@ -21,34 +21,25 @@ describe('User store', () => {
     expect(response.body).toHaveProperty('id');
   });
 
-  it('should not be able register a new user', async () => {
-    const response = await request(app).post('/users');
-
-    expect(response.status).toBe(401);
-    expect(response.body.error.message).toBe('Validation failure.');
-  });
-
-  it('should not be able register a new user already existing', async () => {
-    await factory.create('User', {
-      email: 'daniel@test.com',
-    });
-
-    const userTwo = await factory.attrs('User', {
-      email: 'daniel@test.com',
-    });
-
-    const response = await request(app)
-      .post('/users')
-      .send(userTwo);
-
-    expect(response.status).toBe(400);
-    expect(response.body.error.message).toBe('User already exists.');
-  });
-
-  it('should not be able register user without fields', async () => {
+  it('should not be able register a new user without data', async () => {
     const response = await request(app).post('/users');
 
     expect(response.status).toBe(401);
     expect(response.body).toMatchObject({ error: { message: 'Validation failure.' } });
+  });
+
+  it('should not be able register a new user already existing', async () => {
+    const user: UserInterface = await factory.attrs('User');
+
+    await request(app)
+      .post('/users')
+      .send(user);
+
+    const response = await request(app)
+      .post('/users')
+      .send(user);
+
+    expect(response.status).toBe(400);
+    expect(response.body).toMatchObject({ error: { message: 'User already exists.' } });
   });
 });

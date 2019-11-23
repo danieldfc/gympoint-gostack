@@ -11,7 +11,7 @@ module.exports = {
       allowNull: false,
     },
     duration: {
-      type: Sequelize.STRING,
+      type: Sequelize.INTEGER,
       allowNull: false,
     },
     price: {

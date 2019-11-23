@@ -4,6 +4,6 @@ export interface StudentInterface extends Model {
   name: string
   email: string
   age: number
-  weight?: number
+  weight: number
   height: number
 }

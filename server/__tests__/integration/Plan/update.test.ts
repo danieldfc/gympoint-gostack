@@ -5,7 +5,7 @@ import { UserInterface } from '../../../src/app/interfaces/UserInterface';
 import { PlanInterface } from '../../../src/app/interfaces/PlanInterface';
 
 import truncate from '../../util/truncate';
-import factory from '../../factories';
+import factory from '../../factory';
 
 describe('Plan update', () => {
   beforeEach(async () => {
@@ -22,8 +22,8 @@ describe('Plan update', () => {
       .set('Authorization', `Bearer ${user.generateToken()}`)
       .send({
         title: 'gold',
-        duration: '1 mês',
-        price: 120,
+        duration: plan.duration,
+        price: plan.price,
       });
 
     expect(response.status).toBe(200);
@@ -37,7 +37,7 @@ describe('Plan update', () => {
       .set('Authorization', `Bearer ${user.generateToken()}`)
       .send({
         title: 'gold',
-        duration: '1 mes',
+        duration: 1,
         price: 120,
       });
 
@@ -47,11 +47,11 @@ describe('Plan update', () => {
 
   it('should not be able update a plan already exists', async () => {
     const user: UserInterface = await factory.create('User');
-    await factory.create('Plan', {
-      title: 'start',
-    });
     const plan: PlanInterface = await factory.create('Plan', {
       title: 'gold',
+    });
+    await factory.create('Plan', {
+      title: 'start',
     });
     const response = await request(app)
       .put(`/plans/${plan.id}`)
@@ -74,7 +74,7 @@ describe('Plan update', () => {
       .set('Authorization', `Bearer ${user.generateToken()}`)
       .send({
         title: '',
-        duration: '',
+        duration: 0,
         price: 0,
       });
 

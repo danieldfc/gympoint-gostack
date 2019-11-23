@@ -3,14 +3,14 @@ import bcrypt from 'bcryptjs';
 import { UserInterface } from '../../src/app/interfaces/UserInterface';
 
 import truncate from '../util/truncate';
-import factory from '../factories';
+import factory from '../factory';
 
 describe('Password encrypt', () => {
   beforeEach(async () => {
     await truncate();
   });
 
-  it('should be able encrypt password with new user created', async () => {
+  it('should encrypt user password', async () => {
     const user: UserInterface = await factory.create('User', {
       password: '123456',
     });

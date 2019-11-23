@@ -5,7 +5,7 @@ import { UserInterface } from '../../../src/app/interfaces/UserInterface';
 import { PlanInterface } from '../../../src/app/interfaces/PlanInterface';
 
 import truncate from '../../util/truncate';
-import factory from '../../factories';
+import factory from '../../factory';
 
 describe('Plan store', () => {
   beforeEach(async () => {
@@ -36,11 +36,11 @@ describe('Plan store', () => {
 
   it('should not be able register a new plan with title invalid', async () => {
     const user: UserInterface = await factory.create('User');
+    const plan: PlanInterface = await factory.attrs('Plan');
 
     await factory.create('Plan', {
       title: 'gold',
     });
-    const plan: PlanInterface = await factory.attrs('Plan');
 
     const response = await request(app)
       .post('/plans')

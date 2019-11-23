@@ -5,9 +5,7 @@ export default async (req: Request, res: Response, next: NextFunction) => {
   try {
     const schema = object().shape({
       name: string().strict(true),
-      email: string()
-        .strict(true)
-        .email(),
+      email: string().strict(true).email(),
       age: number().positive(),
       weight: number().positive(),
       height: number().positive(),
@@ -17,8 +15,10 @@ export default async (req: Request, res: Response, next: NextFunction) => {
 
     return next();
   } catch (err) {
-    return res
-      .status(401)
-      .json({ error: { message: 'Validation failure.' } });
+    return res.status(401).json({
+      error: {
+        message: 'Validation failure.',
+      },
+    });
   }
 };

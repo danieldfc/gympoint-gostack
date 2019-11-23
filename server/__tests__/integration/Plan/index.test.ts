@@ -5,7 +5,7 @@ import { UserInterface } from '../../../src/app/interfaces/UserInterface';
 import { PlanInterface } from '../../../src/app/interfaces/PlanInterface';
 
 import truncate from '../../util/truncate';
-import factory from '../../factories';
+import factory from '../../factory';
 
 describe('Plan index', () => {
   beforeEach(async () => {

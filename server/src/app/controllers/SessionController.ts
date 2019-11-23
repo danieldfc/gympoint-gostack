@@ -1,9 +1,6 @@
 import { Request, Response } from 'express';
-import jwt from 'jsonwebtoken';
 
 import User from '../models/User';
-
-import authConfig from '../../config/auth';
 
 class SessionController {
   async store(req: Request, res: Response): Promise<Response> {
@@ -20,7 +17,7 @@ class SessionController {
     }
 
     if (!(await user.checkPassword(password))) {
-      return res.status(400).json({
+      return res.status(401).json({
         error: {
           message: 'Password does not match',
         },

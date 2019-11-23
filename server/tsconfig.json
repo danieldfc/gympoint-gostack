@@ -3,6 +3,7 @@
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "isolatedModules": true,
+    "allowJs": true,
     "module": "commonjs",
     "moduleResolution": "node",
     "noEmit": true,
@@ -14,7 +15,7 @@
     "target": "es6",
     "typeRoots": ["@types", "./node_modules/@types", "./@types"],
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
+    "emitDecoratorMetadata": true
   },
   "exclude": ["node_modules/**"],
   "include": ["src/**/*.ts"]
