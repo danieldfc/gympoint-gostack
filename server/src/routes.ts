@@ -38,6 +38,7 @@ routes.use(authMiddleware);
 routes.post('/students', validationStudentStore, StudentController.store);
 routes.put('/students/:id', validationStudentUpdate, StudentController.update);
 
+routes.get('/students/:student_id/checkins', CheckinController.index);
 routes.post('/students/:student_id/checkins', CheckinController.store);
 
 routes.get('/plans', PlanController.index);

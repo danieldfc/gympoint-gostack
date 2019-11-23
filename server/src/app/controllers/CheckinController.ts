@@ -6,6 +6,23 @@ import Student from '../models/Student';
 import Checkin from '../models/Checkin';
 
 class CheckinController {
+  async index(req: Request, res: Response): Promise<Response> {
+    const { student_id } = req.params;
+
+    const checkins = await Checkin.findAll({
+      where: { student_id },
+      include: [
+        {
+          model: Student,
+          as: 'student',
+          attributes: ['id', 'name', 'email'],
+        },
+      ],
+    });
+
+    return res.status(200).json(checkins);
+  }
+
   async store(req: Request, res: Response): Promise<Response> {
     const { student_id } = req.params;
     const student = await Student.findByPk(student_id);
