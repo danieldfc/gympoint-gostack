@@ -9,6 +9,7 @@ import StudentController from './app/controllers/StudentController';
 import PlanController from './app/controllers/PlanController';
 import CheckinController from './app/controllers/CheckinController';
 import HelpOrderController from './app/controllers/HelpOrderController';
+import AnswerController from './app/controllers/AnswerController';
 
 import authMiddleware from './app/middlewares/auth';
 
@@ -44,6 +45,8 @@ routes.post('/students/:student_id/checkins', CheckinController.store);
 
 routes.get('/students/:student_id/help-orders', HelpOrderController.index);
 routes.post('/students/:student_id/help-orders', HelpOrderController.store);
+
+routes.post('/help-orders/:help_order_id/answer', AnswerController.store);
 
 routes.get('/plans', PlanController.index);
 routes.post('/plans', validationPlanStore, PlanController.store);

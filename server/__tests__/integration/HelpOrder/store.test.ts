@@ -13,7 +13,7 @@ describe('HelpOrder store', () => {
     await truncate();
   });
 
-  xit('should be able register a new help order', async () => {
+  it('should be able register a new help order', async () => {
     const user: UserInterface = await factory.create('User');
     const student: StudentInterface = await factory.create('Student');
     const help_order: HelpOrderInterface = await factory.attrs('HelpOrder');
@@ -26,7 +26,7 @@ describe('HelpOrder store', () => {
     expect(response.body).toHaveProperty('id');
   });
 
-  xit('should not be able register a new help order without student', async () => {
+  it('should not be able register a new help order without student', async () => {
     const user: UserInterface = await factory.create('User');
     const help_order: HelpOrderInterface = await factory.attrs('HelpOrder');
     const response = await request(app)
