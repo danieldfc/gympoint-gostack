@@ -5,6 +5,7 @@ import User from '../src/app/models/User';
 import Student from '../src/app/models/Student';
 import Plan from '../src/app/models/Plan';
 import Checkin from '../src/app/models/Checkin';
+import HelpOrder from '../src/app/models/HelpOrder';
 
 factory.define('User', User, {
   name: faker.name.findName(),
@@ -28,6 +29,11 @@ factory.define('Plan', Plan, {
 
 factory.define('Checkin', Checkin, {
   student_id: faker.random.number({ min: 1 }),
+});
+
+factory.define('HelpOrder', HelpOrder, {
+  student_id: faker.random.number({ min: 1 }),
+  question: faker.lorem.word(),
 });
 
 export default factory;
