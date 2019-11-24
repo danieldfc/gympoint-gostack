@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>Code coverage report for validators/Student/Store.ts</title>
+    <title>Code coverage report for validators/Enrollment/Store.ts</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../prettify.css" />
     <link rel="stylesheet" href="../../base.css" />
@@ -16,7 +16,7 @@
 <div class='wrapper'>
   <div class='pad1'>
     <h1>
-      <a href="../../index.html">All files</a> / <a href="index.html">validators/Student</a> Store.ts
+      <a href="../../index.html">All files</a> / <a href="index.html">validators/Enrollment</a> Store.ts
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
@@ -74,22 +74,12 @@
 <a name='L26'></a><a href='#L26'>26</a>
 <a name='L27'></a><a href='#L27'>27</a>
 <a name='L28'></a><a href='#L28'>28</a>
-<a name='L29'></a><a href='#L29'>29</a>
-<a name='L30'></a><a href='#L30'>30</a>
-<a name='L31'></a><a href='#L31'>31</a>
-<a name='L32'></a><a href='#L32'>32</a>
-<a name='L33'></a><a href='#L33'>33</a>
-<a name='L34'></a><a href='#L34'>34</a>
-<a name='L35'></a><a href='#L35'>35</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">2x</span>
+<a name='L29'></a><a href='#L29'>29</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -112,39 +102,31 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Request, Response, NextFunction } from 'express';
-import { object, string, number } from 'yup';
+import { object, date, number } from 'yup';
 &nbsp;
 export default async (req: Request, res: Response, next: NextFunction) =&gt; {
   try {
     const schema = object().shape({
-      name: string()
-        .strict(true)
-        .required(),
-      email: string()
-        .strict(true)
-        .email()
-        .required(),
-      age: number()
+      student_id: number()
         .positive()
+        .integer()
         .required(),
-      weight: number()
+      plan_id: number()
         .positive()
+        .integer()
         .required(),
-      height: number()
-        .positive()
-        .required(),
+      start_date: date().required(),
+      end_date: date().required(),
+      price: number().positive().required(),
     });
+&nbsp;
     await schema.validate(req.body, { abortEarly: false });
 &nbsp;
     return next();
   } catch (err) {
     return res.status(401).json({
-      error: {
-        message: 'Validation failure.',
-      },
+      error: { message: 'Validations failures.' },
     });
   }
 };

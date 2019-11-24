@@ -6,6 +6,7 @@ import Student from '../src/app/models/Student';
 import Plan from '../src/app/models/Plan';
 import Checkin from '../src/app/models/Checkin';
 import HelpOrder from '../src/app/models/HelpOrder';
+import Enrollment from '../src/app/models/Enrollment';
 
 factory.define('User', User, {
   name: faker.name.findName(),
@@ -34,6 +35,14 @@ factory.define('Checkin', Checkin, {
 factory.define('HelpOrder', HelpOrder, {
   student_id: faker.random.number({ min: 1 }),
   question: faker.lorem.word(),
+});
+
+factory.define('Enrollment', Enrollment, {
+  student_id: faker.random.number({ min: 1 }),
+  plan_id: faker.random.number({ min: 1 }),
+  start_date: new Date(),
+  end_date: new Date(),
+  price: faker.random.number({ min: 1, max: 500, precision: 2 ** -1 }),
 });
 
 export default factory;

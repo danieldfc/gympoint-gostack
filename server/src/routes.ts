@@ -10,6 +10,7 @@ import PlanController from './app/controllers/PlanController';
 import CheckinController from './app/controllers/CheckinController';
 import HelpOrderController from './app/controllers/HelpOrderController';
 import AnswerController from './app/controllers/AnswerController';
+import EnrollmentController from './app/controllers/EnrollmentController';
 
 import authMiddleware from './app/middlewares/auth';
 
@@ -19,6 +20,8 @@ import validationStudentStore from './app/validators/Student/Store';
 import validationStudentUpdate from './app/validators/Student/Update';
 import validationPlanStore from './app/validators/Plan/Store';
 import validationPlanUpdate from './app/validators/Plan/Update';
+import validationEnrollmentStore from './app/validators/Enrollment/Store';
+import validationEnrollmentUpdate from './app/validators/Enrollment/Update';
 
 const routes = Router();
 
@@ -52,5 +55,14 @@ routes.get('/plans', PlanController.index);
 routes.post('/plans', validationPlanStore, PlanController.store);
 routes.put('/plans/:id', validationPlanUpdate, PlanController.update);
 routes.delete('/plans/:id', PlanController.delete);
+
+routes.get('/enrollment', EnrollmentController.index);
+routes.post('/enrollment/:student_id/student',
+  validationEnrollmentStore,
+  EnrollmentController.store);
+routes.put('/enrollment/:student_id/student',
+  validationEnrollmentUpdate,
+  EnrollmentController.update);
+routes.delete('/enrollment/:id', EnrollmentController.delete);
 
 export default routes;

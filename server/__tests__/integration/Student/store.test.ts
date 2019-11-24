@@ -19,13 +19,7 @@ describe('Student store', () => {
     const response = await request(app)
       .post('/students')
       .set('Authorization', `Bearer ${user.generateToken()}`)
-      .send({
-        name: student.name,
-        email: student.email,
-        age: student.age,
-        weight: student.weight,
-        height: student.height,
-      });
+      .send(student);
 
     expect(response.status).toBe(200);
     expect(response.body).toHaveProperty('id');

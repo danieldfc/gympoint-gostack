@@ -2,7 +2,7 @@ import {
   Model, DataType, Column, UpdatedAt, CreatedAt,
 } from 'sequelize-typescript';
 
-class HelpOrder extends Model {
+class HelpOrder extends Model<HelpOrder> {
   @Column
   question!: string
 

@@ -33,7 +33,7 @@ describe('Student update', () => {
     expect(response.body).toHaveProperty('id');
   });
 
-  xit('should not be able update a student without fields', async () => {
+  it('should not be able update a student without fields', async () => {
     const user: UserInterface = await factory.create('User');
     const student: StudentInterface = await factory.create('Student');
 
