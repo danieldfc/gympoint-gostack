@@ -7,8 +7,15 @@ import Plan from '../models/Plan';
 import CreateEnrollmentService from '../services/CreateEnrollmentService';
 import UpdateEnrollmentService from '../services/UpdateEnrollmentService';
 
+import Cache from '../../lib/Cache';
+
 class EnrollmentController {
-  async index(req: Request, res: Response): Promise<Response> {
+  async index(req: Request, res: Response): Promise<Response | string> {
+    const cached = await Cache.get('enrollments');
+    if (cached) {
+      return res.json(cached);
+    }
+
     const enrollments = await Enrollment.findAll({
       attributes: ['id', 'start_date', 'end_date', 'price'],
       include: [
@@ -25,6 +32,10 @@ class EnrollmentController {
       ],
     });
 
+    if (enrollments) {
+      return Cache.set('enrollments', enrollments);
+    }
+
     return res.json(enrollments);
   }
 
@@ -37,6 +48,8 @@ class EnrollmentController {
       plan_id,
       start_date,
     });
+
+    await Cache.invalidate('enrollments');
 
     return res.json(enrollment);
   }
@@ -52,6 +65,8 @@ class EnrollmentController {
       start_date,
     });
 
+    await Cache.invalidate('enrollments');
+
     return res.json(enrollment);
   }
 
@@ -66,6 +81,8 @@ class EnrollmentController {
     }
 
     await enrollment.destroy();
+
+    await Cache.invalidate('enrollments');
 
     return res.send();
   }
