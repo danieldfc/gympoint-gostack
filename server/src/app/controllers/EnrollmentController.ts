@@ -1,9 +1,11 @@
 import { Request, Response } from 'express';
-import { addMonths, parseISO } from 'date-fns';
 
 import Enrollment from '../models/Enrollment';
 import Student from '../models/Student';
 import Plan from '../models/Plan';
+
+import CreateEnrollmentService from '../services/CreateEnrollmentService';
+import UpdateEnrollmentService from '../services/UpdateEnrollmentService';
 
 class EnrollmentController {
   async index(req: Request, res: Response): Promise<Response> {
@@ -28,38 +30,12 @@ class EnrollmentController {
 
   async store(req: Request, res: Response): Promise<Response> {
     const { student_id } = req.params;
-    const student = await Student.findByPk(student_id);
-
-    if (!student) {
-      return res.status(400).json({ error: { message: 'Student does not exists' } });
-    }
-
     const { plan_id, start_date } = req.body;
-    const plan = await Plan.findByPk(plan_id);
 
-    if (!plan) {
-      return res.status(400).json({ error: { message: 'Plan does not exists' } });
-    }
-
-    const studentCheckEnrollment = await Enrollment.findOne({
-      where: {
-        student_id,
-      },
-    });
-    if (studentCheckEnrollment) {
-      return res
-        .status(400)
-        .json({ error: { message: 'Student already enrolled in a plan' } });
-    }
-
-    const end_date = addMonths(parseISO(start_date), plan.duration);
-
-    const enrollment = await Enrollment.create({
-      plan_id,
+    const enrollment = await CreateEnrollmentService.run({
       student_id,
+      plan_id,
       start_date,
-      end_date,
-      price: plan.duration * plan.price,
     });
 
     return res.json(enrollment);
@@ -67,31 +43,13 @@ class EnrollmentController {
 
   async update(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
-    const enrollment = await Enrollment.findByPk(id);
-
-    if (!enrollment) {
-      return res.status(400).json({ error: 'Enrollment does not exists' });
-    }
-
     const { plan_id, student_id, start_date } = req.body;
-    const plan = await Plan.findByPk(plan_id);
-    if (!plan) {
-      return res.status(400).json({ error: 'Plan does not exists' });
-    }
 
-    const student = await Student.findByPk(student_id);
-    if (!student) {
-      return res.status(400).json({ error: 'Student does not exists' });
-    }
-
-    const end_date = addMonths(parseISO(start_date), plan.duration);
-
-    await enrollment.update({
+    const enrollment = await UpdateEnrollmentService.run({
+      enrollment_id: id,
       plan_id,
       student_id,
       start_date,
-      end_date,
-      price: plan.duration * plan.price,
     });
 
     return res.json(enrollment);

@@ -23,6 +23,8 @@ class HelpOrderController {
 
   async store(req: Request, res: Response): Promise<Response> {
     const { student_id } = req.params;
+    const { question } = req.body;
+
     const student = await Student.findByPk(student_id);
 
     if (!student) {
@@ -31,7 +33,6 @@ class HelpOrderController {
         .json({ error: { message: 'Student does not exists' } });
     }
 
-    const { question } = req.body;
 
     const helpOrder = await HelpOrder.create({
       student_id,

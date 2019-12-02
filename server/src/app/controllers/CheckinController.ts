@@ -1,9 +1,9 @@
-import { subDays } from 'date-fns';
-import { Op } from 'sequelize';
 import { Request, Response } from 'express';
 
 import Student from '../models/Student';
 import Checkin from '../models/Checkin';
+
+import CreateCheckinService from '../services/CreateCheckinService';
 
 class CheckinController {
   async index(req: Request, res: Response): Promise<Response> {
@@ -25,30 +25,8 @@ class CheckinController {
 
   async store(req: Request, res: Response): Promise<Response> {
     const { student_id } = req.params;
-    const student = await Student.findByPk(student_id);
 
-    if (!student) {
-      return res
-        .status(400)
-        .json({ error: { message: 'Student does not exists' } });
-    }
-
-    const countCheckins = await Checkin.findAndCountAll({
-      where: {
-        student_id,
-        created_at: { [Op.between]: [subDays(new Date(), 7), new Date()] },
-      },
-    });
-
-    if (countCheckins.count >= 5) {
-      return res.status(400).json({
-        error: {
-          message: 'You can only check-in 5 times every 7 days!',
-        },
-      });
-    }
-
-    const checkin = await Checkin.create({
+    const checkin = await CreateCheckinService.run({
       student_id,
     });
 

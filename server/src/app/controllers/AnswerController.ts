@@ -6,6 +6,7 @@ import Student from '../models/Student';
 class AnswerController {
   async store(req: Request, res: Response): Promise<Response> {
     const { help_order_id } = req.params;
+    const { answer } = req.body;
 
     const helpOrder = await HelpOrder.findByPk(help_order_id, {
       include: [
@@ -29,7 +30,6 @@ class AnswerController {
       });
     }
 
-    const { answer } = req.body;
     await helpOrder.update({
       answer,
       answer_at: new Date(),
