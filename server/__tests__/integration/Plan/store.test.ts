@@ -12,7 +12,7 @@ describe('Plan store', () => {
     await truncate();
   });
 
-  it('should be able register a new plan', async () => {
+  xit('should be able register a new plan', async () => {
     const user: UserInterface = await factory.create('User');
     const plan: PlanInterface = await factory.attrs('Plan');
     const response = await request(app)
@@ -24,7 +24,7 @@ describe('Plan store', () => {
     expect(response.body).toHaveProperty('id');
   });
 
-  it('should not be able register a new plan without fields', async () => {
+  xit('should not be able register a new plan without fields', async () => {
     const user: UserInterface = await factory.create('User');
     const response = await request(app)
       .post('/plans')
@@ -34,7 +34,7 @@ describe('Plan store', () => {
     expect(response.body).toMatchObject({ error: { message: 'Validation failure.' } });
   });
 
-  it('should not be able register a new plan with title invalid', async () => {
+  xit('should not be able register a new plan with title invalid', async () => {
     const user: UserInterface = await factory.create('User');
     const plan: PlanInterface = await factory.attrs('Plan');
 

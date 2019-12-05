@@ -3,10 +3,14 @@ import { Request, Response } from 'express';
 import HelpOrder from '../models/HelpOrder';
 import Student from '../models/Student';
 
+import Mail from '../../lib/Mail';
+
 class HelpOrderController {
   async index(req: Request, res: Response): Promise<Response> {
+    const { student_id } = req.params;
     const helpOrder = await HelpOrder.findAll({
       where: {
+        student_id,
         answer: null,
       },
       include: [
@@ -37,6 +41,15 @@ class HelpOrderController {
     const helpOrder = await HelpOrder.create({
       student_id,
       question,
+    });
+
+    await Mail.sendMail({
+      to: `${student.name} <${student.email}>`,
+      subject: 'Create help',
+      template: 'HelpOrderMail',
+      context: {
+        name: student.name,
+      },
     });
 
     return res.status(200).json(helpOrder);

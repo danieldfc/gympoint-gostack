@@ -12,7 +12,7 @@ describe('Student store', () => {
     await truncate();
   });
 
-  it('should be able register a new student', async () => {
+  xit('should be able register a new student', async () => {
     const user: UserInterface = await factory.create('User');
     const student: StudentInterface = await factory.attrs('Student');
 
@@ -25,7 +25,7 @@ describe('Student store', () => {
     expect(response.body).toHaveProperty('id');
   });
 
-  it('should not be able register a new student without fields', async () => {
+  xit('should not be able register a new student without fields', async () => {
     const user: UserInterface = await factory.create('User');
 
     const response = await request(app)
@@ -36,7 +36,7 @@ describe('Student store', () => {
     expect(response.body).toMatchObject({ error: { message: 'Validation failure.' } });
   });
 
-  it('should not be able register a student duplicated', async () => {
+  xit('should not be able register a student duplicated', async () => {
     const user: UserInterface = await factory.create('User');
     const student: StudentInterface = await factory.attrs('Student');
 
@@ -54,7 +54,7 @@ describe('Student store', () => {
     expect(response.body).toMatchObject({ error: { message: 'Student already exists.' } });
   });
 
-  it('should not be able register student without authentication', async () => {
+  xit('should not be able register student without authentication', async () => {
     const student: StudentInterface = await factory.attrs('Student');
 
     const response = await request(app)
@@ -65,7 +65,7 @@ describe('Student store', () => {
     expect(response.body).toMatchObject({ error: { message: 'Token not found' } });
   });
 
-  it('should not be able register student with authentication invalidated', async () => {
+  xit('should not be able register student with authentication invalidated', async () => {
     const student: StudentInterface = await factory.attrs('Student');
 
     const response = await request(app)

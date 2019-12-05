@@ -13,7 +13,7 @@ describe('Answer store', () => {
     await truncate();
   });
 
-  it('should be able to answer a student with a request for help', async () => {
+  xit('should be able to answer a student with a request for help', async () => {
     const user: UserInterface = await factory.create('User');
     const student: StudentInterface = await factory.create('Student');
     const help_order: HelpOrderInterface = await factory.create('HelpOrder', {
@@ -28,7 +28,7 @@ describe('Answer store', () => {
     expect(response.body).toHaveProperty('id');
   });
 
-  it('should not be able to answer a student without a request for help', async () => {
+  xit('should not be able to answer a student without a request for help', async () => {
     const user: UserInterface = await factory.create('User');
     const response = await request(app)
       .post('/help-orders/1/answer')
@@ -40,7 +40,7 @@ describe('Answer store', () => {
     });
   });
 
-  it('should not be able to answer a student with a request for help already exists', async () => {
+  xit('should not be able to answer a student with a request for help already exists', async () => {
     const user: UserInterface = await factory.create('User');
     const student: StudentInterface = await factory.create('Student');
     const help_order: HelpOrderInterface = await factory.create('HelpOrder', {

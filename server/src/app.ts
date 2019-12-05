@@ -32,14 +32,14 @@ class App {
     this.server.use(json());
     this.server.use(morgan('dev'));
 
-    /* this.server.use(new RateLimit({
-      store: new RateLimitRedis({
-        client: redis.createClient({
-          host: process.env.REDIS_HOST,
-          port: 6379,
-        }),
-      }),
-    })); */
+    // this.server.use(new RateLimit({
+    //   store: RateLimitRedis({
+    //     client: redis.createClient({
+    //       host: process.env.REDIS_HOST,
+    //       port: 6379 || process.env.REDIS_PORT,
+    //     }),
+    //   }),
+    // }));
   }
 
   private routes(): void {

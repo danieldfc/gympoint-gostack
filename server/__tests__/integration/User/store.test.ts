@@ -11,7 +11,7 @@ describe('User store', () => {
     await truncate();
   });
 
-  it('should be able register a new user', async () => {
+  xit('should be able register a new user', async () => {
     const user: UserInterface = await factory.attrs('User');
     const response = await request(app)
       .post('/users')
@@ -21,14 +21,14 @@ describe('User store', () => {
     expect(response.body).toHaveProperty('id');
   });
 
-  it('should not be able register a new user without data', async () => {
+  xit('should not be able register a new user without data', async () => {
     const response = await request(app).post('/users');
 
     expect(response.status).toBe(401);
     expect(response.body).toMatchObject({ error: { message: 'Validation failure.' } });
   });
 
-  it('should not be able register a new user already existing', async () => {
+  xit('should not be able register a new user already existing', async () => {
     const user: UserInterface = await factory.attrs('User');
 
     await request(app)

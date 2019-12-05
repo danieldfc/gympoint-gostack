@@ -9,12 +9,12 @@ import { EnrollmentInterface } from '../../../src/app/interfaces/EnrollmentInter
 import truncate from '../../util/truncate';
 import factory from '../../factory';
 
-describe('Enrollment index', () => {
+describe('Enrollment delete', () => {
   beforeEach(async () => {
     await truncate();
   });
 
-  it('should be able show all enrollment a student for a plan', async () => {
+  xit('should be able delete enrollment of a student for a plan', async () => {
     const user: UserInterface = await factory.create('User');
     const student: StudentInterface = await factory.create('Student');
     const plan: PlanInterface = await factory.create('Plan');
@@ -24,10 +24,19 @@ describe('Enrollment index', () => {
     });
 
     const response = await request(app)
-      .get('/enrollment')
+      .delete(`/enrollment/${enrollment.id}`)
       .set('Authorization', `Bearer ${user.generateToken()}`);
 
     expect(response.status).toBe(200);
-    expect(response.body[0].id).toEqual(enrollment.id);
+  });
+
+  xit('should not be able delete without enrollment of a student for a plan', async () => {
+    const user: UserInterface = await factory.create('User');
+    const response = await request(app)
+      .delete('/enrollment/1')
+      .set('Authorization', `Bearer ${user.generateToken()}`);
+
+    expect(response.status).toBe(400);
+    expect(response.body).toMatchObject({ error: { message: 'Enrollment does not exists' } });
   });
 });

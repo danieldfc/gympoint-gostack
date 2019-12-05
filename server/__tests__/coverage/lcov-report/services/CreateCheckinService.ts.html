@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>Code coverage report for controllers/SessionController.ts</title>
+    <title>Code coverage report for services/CreateCheckinService.ts</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../prettify.css" />
     <link rel="stylesheet" href="../base.css" />
@@ -16,13 +16,13 @@
 <div class='wrapper'>
   <div class='pad1'>
     <h1>
-      <a href="../index.html">All files</a> / <a href="index.html">controllers</a> SessionController.ts
+      <a href="../index.html">All files</a> / <a href="index.html">services</a> CreateCheckinService.ts
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">38.46% </span>
+        <span class="strong">52.94% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>5/13</span>
+        <span class='fraction'>9/17</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">37.5% </span>
@@ -35,16 +35,16 @@
         <span class='fraction'>1/2</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">27.27% </span>
+        <span class="strong">38.46% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>3/11</span>
+        <span class='fraction'>5/13</span>
       </div>
     </div>
     <p class="quiet">
       Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
     </p>
   </div>
-  <div class='status-line low'></div>
+  <div class='status-line medium'></div>
 <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -80,14 +80,10 @@
 <a name='L32'></a><a href='#L32'>32</a>
 <a name='L33'></a><a href='#L33'>33</a>
 <a name='L34'></a><a href='#L34'>34</a>
-<a name='L35'></a><a href='#L35'>35</a>
-<a name='L36'></a><a href='#L36'>36</a>
-<a name='L37'></a><a href='#L37'>37</a>
-<a name='L38'></a><a href='#L38'>38</a>
-<a name='L39'></a><a href='#L39'>39</a>
-<a name='L40'></a><a href='#L40'>40</a>
-<a name='L41'></a><a href='#L41'>41</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">5x</span>
+<a name='L35'></a><a href='#L35'>35</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -95,16 +91,9 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -113,59 +102,52 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Request, Response } from 'express';<span class="branch-1 cbranch-no" title="branch not covered" ></span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Op } from 'sequelize';<span class="branch-1 cbranch-no" title="branch not covered" ></span>
+import { subDays } from 'date-fns';
 &nbsp;
-import User from '../models/User';
+import Checkin from '../models/Checkin';
+import Student from '../models/Student';
 &nbsp;
-class SessionController {
-<span class="fstat-no" title="function not covered" >  as</span>ync store(req: Request, res: Response): Promise&lt;Response&gt; {
-    const { email, password } = <span class="cstat-no" title="statement not covered" >req.body;</span>
+class CreateCheckinService {
+<span class="fstat-no" title="function not covered" >  as</span>ync run({ student_id }): Promise&lt;Checkin&gt; {
+    const student = <span class="cstat-no" title="statement not covered" >await Student.findByPk(student_id);</span>
 &nbsp;
-    const user = <span class="cstat-no" title="statement not covered" >await User.findOne({ where: { email } });</span>
-&nbsp;
-<span class="cstat-no" title="statement not covered" >    if (!user) {</span>
-<span class="cstat-no" title="statement not covered" >      return res.status(400).json({</span>
-        error: {
-          message: 'User not found.',
-        },
-      });
+<span class="cstat-no" title="statement not covered" >    if (!student) {</span>
+<span class="cstat-no" title="statement not covered" >      throw new Error('Student does not exists');</span>
     }
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    if (!(await user.checkPassword(password))) {</span>
-<span class="cstat-no" title="statement not covered" >      return res.status(401).json({</span>
-        error: {
-          message: 'Password does not match',
-        },
-      });
-    }
-&nbsp;
-    const { id, name } = <span class="cstat-no" title="statement not covered" >user;</span>
-&nbsp;
-<span class="cstat-no" title="statement not covered" >    return res.status(200).json({</span>
-      user: {
-        id,
-        name,
-        email,
+    const countCheckins = <span class="cstat-no" title="statement not covered" >await Checkin.findAndCountAll({</span>
+      where: {
+        student_id,
+        created_at: { [Op.between]: [subDays(new Date(), 7), new Date()] },
       },
-      token: user.generateToken(),
     });
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (countCheckins.count &gt;= 5) {</span>
+<span class="cstat-no" title="statement not covered" >      throw new Error('You can only check-in 5 times every 7 days!');</span>
+    }
+&nbsp;
+    const checkin = <span class="cstat-no" title="statement not covered" >await Checkin.create({</span>
+      student_id,
+    });
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    return checkin;</span>
   }
 }
 &nbsp;
-export default new SessionController();
+export default new CreateCheckinService();
 &nbsp;</pre></td></tr>
 </table></pre>
 <div class='push'></div><!-- for sticky footer -->

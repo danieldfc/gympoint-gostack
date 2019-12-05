@@ -12,7 +12,7 @@ describe('Checkin store', () => {
     await truncate();
   });
 
-  it('should be able to checkin student', async () => {
+  xit('should be able to checkin student', async () => {
     const user: UserInterface = await factory.create('User');
     const student: StudentInterface = await factory.create('Student');
     const response = await request(app)
@@ -23,7 +23,7 @@ describe('Checkin store', () => {
     expect(response.body).toHaveProperty('id');
   });
 
-  it('should not be able to checkin student not found', async () => {
+  xit('should not be able to checkin student not found', async () => {
     const user: UserInterface = await factory.create('User');
     const response = await request(app)
       .post('/students/1/checkins')
@@ -35,7 +35,7 @@ describe('Checkin store', () => {
     });
   });
 
-  it('should not be able to create checkin to student with more of 5', async () => {
+  xit('should not be able to create checkin to student with more of 5', async () => {
     const user: UserInterface = await factory.create('User');
     const student: StudentInterface = await factory.create('Student');
 

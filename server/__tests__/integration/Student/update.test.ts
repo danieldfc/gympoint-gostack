@@ -12,7 +12,7 @@ describe('Student update', () => {
     await truncate();
   });
 
-  it('should be able update a student', async () => {
+  xit('should be able update a student', async () => {
     const user: UserInterface = await factory.create('User');
     const student: StudentInterface = await factory.create('Student', {
       email: 'daniel@test.com',
@@ -33,7 +33,7 @@ describe('Student update', () => {
     expect(response.body).toHaveProperty('id');
   });
 
-  it('should not be able update a student without fields', async () => {
+  xit('should not be able update a student without fields', async () => {
     const user: UserInterface = await factory.create('User');
     const student: StudentInterface = await factory.create('Student');
 
@@ -45,7 +45,7 @@ describe('Student update', () => {
     expect(response.body).toMatchObject({ error: { message: 'Validation failure.' } });
   });
 
-  it('should not be able update a student with email already existing', async () => {
+  xit('should not be able update a student with email already existing', async () => {
     const user: UserInterface = await factory.create('User');
     const student: StudentInterface = await factory.create('Student', {
       email: 'daniel@test.com',
@@ -69,7 +69,7 @@ describe('Student update', () => {
     expect(response.body).toMatchObject({ error: { message: 'Student already exists with this email.' } });
   });
 
-  it('should not be able update a student not found', async () => {
+  xit('should not be able update a student not found', async () => {
     const user: UserInterface = await factory.create('User');
 
     const response = await request(app)

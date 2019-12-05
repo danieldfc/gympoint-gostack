@@ -12,7 +12,7 @@ describe('Plan delete', () => {
     await truncate();
   });
 
-  it('should be able to delete a plan', async () => {
+  xit('should be able to delete a plan', async () => {
     const user: UserInterface = await factory.create('User');
     const plan: PlanInterface = await factory.create('Plan');
     const response = await request(app)
@@ -22,7 +22,7 @@ describe('Plan delete', () => {
     expect(response.status).toBe(200);
   });
 
-  it('should not be able to delete a plan not found', async () => {
+  xit('should not be able to delete a plan not found', async () => {
     const user: UserInterface = await factory.create('User');
     const response = await request(app)
       .delete('/plans/1')

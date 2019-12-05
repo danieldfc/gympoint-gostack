@@ -1,7 +1,7 @@
 import { Router } from 'express';
 
-// import Brute from 'express-brute';
-// import BruteRedis from 'express-brute-redis';
+import Brute from 'express-brute';
+import BruteRedis from 'express-brute-redis';
 
 import UserController from './app/controllers/UserController';
 import SessionController from './app/controllers/SessionController';
@@ -25,16 +25,16 @@ import validationEnrollmentUpdate from './app/validators/Enrollment/Update';
 
 const routes = Router();
 
-// const bruteStore = new BruteRedis({
-//   host: process.env.REDIS_HOST,
-//   port: 6379,
-// });
+const bruteStore = new BruteRedis({
+  host: process.env.REDIS_HOST,
+  port: 6379,
+});
 
-// const bruteForce = new Brute(bruteStore);
+const bruteForce = new Brute(bruteStore);
 
 routes.post('/users', validationUserStore, UserController.store);
 routes.post('/sessions',
-  // bruteForce.prevent,
+  bruteForce.prevent,
   validationSessionStore,
   SessionController.store);
 

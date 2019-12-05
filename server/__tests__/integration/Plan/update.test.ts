@@ -12,7 +12,7 @@ describe('Plan update', () => {
     await truncate();
   });
 
-  it('should be able update a plan', async () => {
+  xit('should be able update a plan', async () => {
     const user: UserInterface = await factory.create('User');
     const plan: PlanInterface = await factory.create('Plan', {
       title: 'start',
@@ -30,7 +30,7 @@ describe('Plan update', () => {
     expect(response.body).toHaveProperty('id');
   });
 
-  it('should not be able update a plan not found', async () => {
+  xit('should not be able update a plan not found', async () => {
     const user: UserInterface = await factory.create('User');
     const response = await request(app)
       .put('/plans/1')
@@ -45,7 +45,7 @@ describe('Plan update', () => {
     expect(response.body).toMatchObject({ error: { message: 'Plan not found' } });
   });
 
-  it('should not be able update a plan already exists', async () => {
+  xit('should not be able update a plan already exists', async () => {
     const user: UserInterface = await factory.create('User');
     const plan: PlanInterface = await factory.create('Plan', {
       title: 'gold',
@@ -66,7 +66,7 @@ describe('Plan update', () => {
     expect(response.body).toMatchObject({ error: { message: 'Plan already exists.' } });
   });
 
-  it('should not be able update a plan without fields', async () => {
+  xit('should not be able update a plan without fields', async () => {
     const user: UserInterface = await factory.create('User');
     const plan: PlanInterface = await factory.create('Plan');
     const response = await request(app)

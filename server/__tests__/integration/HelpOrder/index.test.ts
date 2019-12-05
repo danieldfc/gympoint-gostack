@@ -13,7 +13,7 @@ describe('HelpOrder index', () => {
     await truncate();
   });
 
-  it('should be able register a new plan', async () => {
+  xit('should be able register a new plan', async () => {
     const user: UserInterface = await factory.create('User');
     const student: StudentInterface = await factory.create('Student');
     const help_order: HelpOrderInterface = await factory.create('HelpOrder', {
