@@ -1,29 +1,22 @@
-import produce from 'immer';
 import { Reducer } from 'redux';
-import { UserState } from './types';
+import { UserState, UserTypes } from './types';
+import { AuthTypes } from '../auth/types';
 
 const INITIAL_STATE: UserState = {
-  profile: null
+  profile: null,
 };
 
 const userReducer: Reducer<UserState> = (state = INITIAL_STATE, action) => {
-  return produce(state, draft => {
-    switch (action.type) {
-      case '@auth/SIGN_IN_SUCCESS': {
-        draft.profile = action.payload.user;
-        break;
-      }
-      case '@user/UPDATE_PROFILE_SUCCESS': {
-        draft.profile = action.payload.profile;
-        break;
-      }
-      case '@auth/SIGN_OUT': {
-        draft.profile = null;
-        break;
-      }
-      default:
-    }
-  });
-}
+  switch (action.type) {
+    case AuthTypes.SIGN_IN_SUCCESS:
+      return { ...state, profile: action.user };
+    case UserTypes.UPDATE_PROFILE_SUCCESS:
+      return { ...state, profile: action.profile };
+    case AuthTypes.SIGN_OUT:
+      return { ...state, profile: null };
+    default:
+      return state;
+  }
+};
 
 export default userReducer;

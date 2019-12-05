@@ -1,5 +1,4 @@
-import React, { Component as ComponentReact, ComponentClass  } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
 import { Redirect, Route } from 'react-router-dom';
 
 import AuthLayout from '~/pages/_layouts/auth';
@@ -7,15 +6,18 @@ import DefaultLayout from '~/pages/_layouts/default';
 
 import { store } from '~/store';
 
-interface RouteInterface {
-  component: Function | ComponentReact | ComponentClass
-  isPrivate?: boolean
-}
+type Props = {
+  component: React.ReactType;
+  isPrivate?: boolean;
+  exact?: boolean;
+  path: string;
+};
 
 export default function RouteWrapper({
   component: Component,
   isPrivate,
-}) {
+  ...rest
+}: Props) {
   const { signed } = store.getState().auth;
 
   if (!signed && isPrivate) {
@@ -31,7 +33,7 @@ export default function RouteWrapper({
   return (
     <Route
       {...rest}
-      render={props => (
+      render={(props) => (
         <Layout>
           <Component {...props} />
         </Layout>
@@ -39,13 +41,3 @@ export default function RouteWrapper({
     />
   );
 }
-
-RouteWrapper.propTypes = {
-  isPrivate: PropTypes.bool,
-  component: PropTypes.oneOfType([PropTypes.element, PropTypes.func])
-    .isRequired,
-};
-
-RouteWrapper.defaultProps = {
-  isPrivate: false,
-};

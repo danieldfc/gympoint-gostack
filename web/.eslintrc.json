@@ -7,8 +7,6 @@
   "extends": [
     "react-app",
     "airbnb",
-    "prettier",
-    "prettier/react",
     "plugin:@typescript-eslint/recommended",
     "prettier/@typescript-eslint"
   ],
@@ -16,36 +14,26 @@
     "Atomics": "readonly",
     "SharedArrayBuffer": "readonly"
   },
-  "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaFeatures": {
-        "jsx": true
+      "jsx": true
     },
     "ecmaVersion": 2018,
     "sourceType": "module"
   },
-  "plugins": [
-    "react",
-    "react-hooks",
-    "import",
-    "jsx-a11y",
-    "prettier",
-    "@typescript-eslint"
-  ],
+  "plugins": ["react", "import", "jsx-a11y", "react-hooks", "prettier"],
   "rules": {
     "react/jsx-filename-extension": [
       "error",
-      { "extensions": [".ts", ".tsx"] }
+      {
+        "extensions": [".tsx"]
+      }
     ],
-    "react/jsx-one-expression-per-line": "off",
-    "react-native/no-raw-text": "off",
-    "no-underscore-dangle": "off",
+    "max-len": "off",
     "no-console": ["error", { "allow": ["tron"] }],
-    "no-param-reassign": "off",
-    "react-hooks/rules-of-hooks": "error",
-    "react-hooks/exhaustive-deps": "warn",
     "react/jsx-props-no-spreading": "off",
     "import/prefer-default-export": "off",
+    "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/explicit-member-accessibility": "off"
   },
@@ -54,10 +42,7 @@
       "@typescript-eslint/parser": [".ts", ".tsx"]
     },
     "import/resolver": {
-      "typescript": {},
-      "babel-plugin-root-import": {
-        "rootPathSuffix": "src"
-      }
+      "typescript": {}
     }
   }
 }

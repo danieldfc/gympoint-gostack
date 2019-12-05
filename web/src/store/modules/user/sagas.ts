@@ -1,15 +1,15 @@
-import { all, call, put, takeLatest } from 'redux-saga/effects';
+import {
+  all, call, put, takeLatest,
+} from 'redux-saga/effects';
 import { toast } from 'react-toastify';
 
-import { UserTypes } from './types';
+import { UserTypes, User } from './types';
 import { updateProfileFailure, updateProfileSuccess } from './actions';
 
 import api from '~/services/api';
 
-export function* updateProfile({ payload }) {
+export function* updateProfile({ name, email, ...rest }: User) {
   try {
-    const { name, email, ...rest } = payload.data;
-
     const profile = {
       name,
       email,
@@ -28,5 +28,5 @@ export function* updateProfile({ payload }) {
 }
 
 export default all([
-  takeLatest(UserTypes.UPDATE_PROFILE_REQUEST, updateProfile)
+  takeLatest(UserTypes.UPDATE_PROFILE_REQUEST, updateProfile),
 ]);

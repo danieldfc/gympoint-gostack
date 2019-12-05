@@ -1,16 +1,17 @@
-import { takeLatest, call, put, all } from 'redux-saga/effects';
+import {
+  takeLatest, call, put, all,
+} from 'redux-saga/effects';
 import { toast } from 'react-toastify';
-import { AuthTypes } from './types';
 
 import history from '~/services/history';
 import api from '~/services/api';
 
 import { signInSuccess, signFailure } from './actions';
+import { User } from '../user/types';
+import { AuthTypes } from './types';
 
-export function* signIn({ payload }) {
+export function* signIn({ email, password }: User) {
   try {
-    const { email, password } = payload;
-
     const response = yield call(api.post, 'sessions', {
       email,
       password,
@@ -18,7 +19,7 @@ export function* signIn({ payload }) {
 
     const { token, user } = response.data;
 
-    yield put(signInSuccess(token, user));
+    yield put(signInSuccess({ token, user }));
 
     history.push('/dashboard');
   } catch (err) {
@@ -27,20 +28,8 @@ export function* signIn({ payload }) {
   }
 }
 
-function setToken({ payload }) {
-  if (!payload) return;
-
-  const { token } = payload.auth;
-
-  if (token) {
-    api.defaults.headers.Authorization = `Bearer ${token}`;
-  }
-}
-
-export function* signUp({ payload }) {
+export function* signUp({ name, email, password }: User) {
   try {
-    const { name, email, password } = payload;
-
     yield call(api.post, 'users', {
       name,
       email,
@@ -56,13 +45,21 @@ export function* signUp({ payload }) {
   }
 }
 
-export function signOut() {
+export function signOut(): void {
   history.push('/');
+}
+
+function setToken({ payload }: Record<string, any>) {
+  if (!payload) return;
+
+  const { token } = payload.auth;
+
+  if (token) {
+    api.defaults.headers.Authorization = `Bearer ${token}`;
+  }
 }
 
 export default all([
   takeLatest('persist/REHYDRATE', setToken),
-  takeLatest(AuthTypes.SIGN_UP_REQUEST, signUp),
-  takeLatest(AuthTypes.SIGN_IN_REQUEST, signIn),
   takeLatest(AuthTypes.SIGN_OUT, signOut),
 ]);

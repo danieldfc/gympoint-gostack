@@ -1,4 +1,3 @@
-import produce from 'immer';
 import { Reducer } from 'redux';
 import { AuthState, AuthTypes } from './types';
 
@@ -9,30 +8,22 @@ const INITIAL_STATE: AuthState = {
 };
 
 const authReducer: Reducer<AuthState> = (state = INITIAL_STATE, action) => {
-  return produce(state, draft => {
-    switch (action.type) {
-      case AuthTypes.SIGN_IN_REQUEST: {
-        draft.loading = true;
-        break;
-      }
-      case AuthTypes.SIGN_IN_SUCCESS: {
-        draft.token = action.payload.token;
-        draft.signed = true;
-        draft.loading = false;
-        break;
-      }
-      case AuthTypes.SIGN_FAILURE: {
-        draft.loading = false;
-        break;
-      }
-      case AuthTypes.SIGN_OUT: {
-        draft.token = null;
-        draft.signed = false;
-        break;
-      }
-      default:
-    }
-  });
-}
+  switch (action.type) {
+    case AuthTypes.SIGN_IN_REQUEST:
+      return { ...state, loading: true };
+    case AuthTypes.SIGN_IN_SUCCESS:
+      return {
+        ...state, token: action.token, signed: true, loading: false,
+      };
+    case AuthTypes.SIGN_UP_REQUEST:
+      return { ...state };
+    case AuthTypes.SIGN_FAILURE:
+      return { ...state, loading: false };
+    case AuthTypes.SIGN_OUT:
+      return { ...state, token: null, signed: false };
+    default:
+      return state;
+  }
+};
 
 export default authReducer;

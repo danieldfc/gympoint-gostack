@@ -5,10 +5,11 @@ export enum UserTypes {
 }
 
 export interface User {
-  id: number
   name: string
   email: string
   password: string
+  oldPassword?: string
+  confirmPassword?: string
 }
 
 export interface UserState {
